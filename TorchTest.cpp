@@ -1,13 +1,15 @@
-#include "jtorch/linear.h"
-#include "jtorch/threshold.h"
-#include "jtorch/reshape.h"
-#include "jtorch/sequential.h"
-#include "jtorch/spatial_convolution.h"
-// #include "SpatialConvolutionFactory.hpp"
-#include "jtorch/spatial_max_pooling.h"
-#include "jtorch/tanh.h"
-#include "jtorch/tensor.h"
-#include "jtorch/torch_data.h"
+#include "FileUtils.hpp"
+#include "Linear.hpp"
+#include "Paths.h"
+#include "ReLU.hpp"
+#include "Reshape.hpp"
+#include "Sequential.hpp"
+#include "SpatialConvolution.hpp"
+#include "SpatialConvolutionFactory.hpp"
+#include "SpatialMaxPooling.hpp"
+#include "Tanh.hpp"
+#include "Tensor.hpp"
+#include "TorchData.hpp"
 
 #include <math.h>
 #include <stddef.h>
@@ -23,7 +25,7 @@
 #define LOOSE_EPSILON 0.000001f
 #define SAFE_DELETE(x) if (x != NULL) { delete x; x = NULL; }
 
-using namespace jtorch;
+using namespace mtorch;
 
 class TorchLibTest {
 public:
@@ -101,7 +103,7 @@ public:
 
     void testsAllModules() {
 
-        const std::string test_data_path = resolveTestDataPath("TorchTestData");
+        const std::string test_data_path = "TorchTestData";
 
         const uint32_t num_feats_in = 5;
         const uint32_t num_feats_out = 10;
@@ -313,7 +315,7 @@ public:
         exit(1);
     };
     }
-}
+};
 
 int main() {
     FinalTest t;

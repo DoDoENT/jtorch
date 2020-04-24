@@ -33,7 +33,7 @@ add_link_options(
     "SHELL:-s INITIAL_MEMORY=209715200"
 )
 
-include( ${CMAKE_CURRENT_LIST_DIR}/TorchLib.cmake )
+include( ${CMAKE_CURRENT_LIST_DIR}/TorchLib/TorchLib.cmake )
 
 add_executable( TorchTest TorchTest.cpp )
 target_link_libraries( TorchTest PRIVATE TorchLib )

@@ -12,3 +12,4 @@ build
 *.vcxproj.user
 *.suo
 compile_commands.json
+.vscode
