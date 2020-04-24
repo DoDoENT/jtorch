@@ -27,12 +27,6 @@
 
 #define JTORCH_TENSOR_PRECISON 4
 
-namespace jcl {
-namespace threading {
-class ThreadPool;
-}  // namespace threading
-}  // namespace jcl
-
 #define TO_TENSOR_PTR(x)                                                 \
   ((x != nullptr && ((x)->type() == jtorch::TorchDataType::TENSOR_DATA)) \
        ? (jtorch::Tensor<float>*)(x)                                     \
@@ -40,82 +34,6 @@ class ThreadPool;
 
 namespace jtorch {
 
-static const char* kFillKernel =
-"    __kernel void Fill(\n"
-"      __global float* output,  /* 0 */\n"
-"      const float value) {     /* 1 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] = value;\n"
-"    }";
-
-static const char* kAccumulateKernel =
-"    /* output += input1 */\n"
-"    __kernel void Accumulate(\n"
-"      const __global  float* input1,  /* 0 */\n"
-"      __global  float* output) {      /* 2 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] += input1[x_out];\n"
-"    }";
-
-static const char* kAddKernel =
-"    /* output = input1 + input2 */\n"
-"    __kernel void Add(\n"
-"      const __global  float* input1,  /* 0 */\n"
-"      const __global  float* input2,  /* 1 */\n"
-"      __global  float* output) {      /* 2 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] = input1[x_out] + input2[x_out];\n"
-"    }";
-
-static const char* kSubKernel =
-"    /* output = input1 - input2 */\n"
-"    __kernel void Sub(\n"
-"      const __global  float* input1,  /* 0 */\n"
-"      const __global  float* input2,  /* 1 */\n"
-"      __global  float* output) {      /* 2 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] = input1[x_out] - input2[x_out];\n"
-"    }";
-
-static const char* kAbsKernel =
-"    /* output = |input1| */\n"
-"    __kernel void Abs(\n"
-"      __global  float* output) {     /* 0 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] = fabs(output[x_out]);\n"
-"    }";
-
-static const char* kCopyKernel =
-"    __kernel void Copy(\n"
-"      const __global float* input,  /* 0 */\n"
-"      __global float* output) {     /* 1 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] = input[x_out];\n"
-"    }";
-
-static const char* kMulKernel =
-"    /* output = mul_val * output */\n"
-"    __kernel void Mul(\n"
-"      const  float mul_val,  /* 0 */\n"
-"      __global  float* output) {      /* 1 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] *= mul_val;\n"
-"    }";
-
-static const char* kAddScalarKernel =
-"    /* output = add_val + output */\n"
-"    __kernel void AddScalarKernel(\n"
-"      const  float add_val,  /* 0 */\n"
-"      __global  float* output) {      /* 1 */\n"
-"      const int x_out = get_global_id(0);\n"
-"      output[x_out] += add_val;\n"
-"    }";
-
-// Note: This Tensor class DOESN'T support non-contiguous tensors.  Updating
-// it to do so wouldn't be a huge amount of work, but I have not needed to
-// do any select or narrow operations on the inner dimensions, so I have
-// not implemented it.
-// TODO(tompson): Implement non-contiguous support!
 template <typename T>
 class Tensor : public TorchData {
  public:
