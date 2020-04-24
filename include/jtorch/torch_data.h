@@ -16,6 +16,8 @@
 
 namespace jtorch {
 
+using InputStream = std::istream;
+
 typedef enum {
   UNDEFINED_DATA = 0,
   TABLE_DATA = 1,

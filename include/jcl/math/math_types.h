@@ -11,11 +11,7 @@
 
 #pragma once
 
-#if defined(WIN32) || defined(_WIN32)
 #include <random>  // For std::tr1::mt19937, and others
-#else
-#include <tr1/random>
-#endif
 
 namespace {
 
@@ -32,7 +28,7 @@ static const double kPiOver360 = 0.0087266462599716478846184538424431;
 
 };  // unnamed namespace
 
-typedef std::tr1::mt19937 RandEngine;
+typedef std::mt19937 RandEngine;
 // The following pre-processor defines are ugly, but unfortunately
 // Visual Studio does not support aliased declarations.
 // Usage: NORM_DIST<float> dist;

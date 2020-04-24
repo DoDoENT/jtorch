@@ -16,7 +16,6 @@
 #include <string>
 
 #include "jcl/math/int_types.h"
-#include "jcl/opencl_context.h"
 
 #define USE_OPENCL_LOCAL_SIZES  // Let OpenCL choose worksizes
 
