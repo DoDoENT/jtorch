@@ -19,8 +19,8 @@ namespace mtorch {
   class TorchData {
   public:
     // Constructor / Destructor
-    TorchData();
-    virtual ~TorchData();
+    TorchData() = default;
+    virtual ~TorchData() = default;
 
     virtual TorchDataType type() const { return UNDEFINED_DATA; }
     virtual void print() = 0;

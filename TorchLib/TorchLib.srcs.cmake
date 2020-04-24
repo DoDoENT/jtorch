@@ -21,7 +21,7 @@ set( Source
     ${CMAKE_CURRENT_LIST_DIR}/Source/Tanh.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Source/Tanh.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Source/Tensor.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/Source/TorchData.cpp
+    # ${CMAKE_CURRENT_LIST_DIR}/Source/TorchData.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Source/TorchData.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Source/TorchStage.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Source/TorchStage.hpp
