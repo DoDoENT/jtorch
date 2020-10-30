@@ -25,6 +25,8 @@ add_compile_options(
 
 if ( EMSCRIPTEN )
     add_compile_options( "SHELL:-s WASM=1" )
+
+    set( CMAKE_EXECUTABLE_SUFFIX ".html" )
 endif()
 
 if ( EMSCRIPTEN )
@@ -66,7 +68,7 @@ set( TEST_FILES
 
 if ( EMSCRIPTEN )
     file( COPY ${TEST_FILES} DESTINATION ${CMAKE_BINARY_DIR}/res )
-    target_link_options( TorchTest PRIVATE "SHELL:--preload-file ${CMAKE_BINARY_DIR}/res@/" )
+    target_link_options( TorchTest PRIVATE "SHELL:--preload-file ${CMAKE_BINARY_DIR}/res@/" "SHELL:-s STRICT=0" )
 else()
     file( COPY ${TEST_FILES} DESTINATION ${CMAKE_BINARY_DIR} )
 endif()
