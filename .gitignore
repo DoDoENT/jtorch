@@ -13,3 +13,4 @@ build
 *.suo
 compile_commands.json
 .vscode
+.clangd
