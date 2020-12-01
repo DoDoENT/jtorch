@@ -9,4 +9,5 @@ if( NOT TARGET TorchLib )
     target_include_directories( TorchLib PUBLIC ${CMAKE_CURRENT_LIST_DIR}/Source )
 
     target_link_libraries( TorchLib PUBLIC BlasLibrary )
+    target_compile_options( TorchLib PRIVATE -fexceptions )
 endif()

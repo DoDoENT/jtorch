@@ -12,6 +12,7 @@ add_compile_options(
     -fwhole-program-vtables
     $<$<COMPILE_LANGUAGE:CXX>:-std=gnu++2a>
     $<$<NOT:$<COMPILE_LANGUAGE:CXX>>:-std=gnu11>
+    -fno-exceptions
     -fno-threadsafe-statics
     -fno-rtti
     -fomit-frame-pointer
@@ -24,7 +25,7 @@ add_compile_options(
 )
 
 if ( EMSCRIPTEN )
-    add_compile_options( "SHELL:-s WASM=1" )
+    add_compile_options( "SHELL:-s WASM=1" "SHELL:-s STRICT=1" )
 
     set( CMAKE_EXECUTABLE_SUFFIX ".html" )
 endif()
@@ -33,7 +34,6 @@ if ( EMSCRIPTEN )
     add_link_options(
         "SHELL:--llvm-lto 3"
         "SHELL:--llvm-opts 3"
-        "SHELL:-s STRICT=1"
         "SHELL:-s ALLOW_MEMORY_GROWTH=1"
         --no-heap-copy
         "SHELL:-s INITIAL_MEMORY=209715200"
@@ -42,8 +42,14 @@ endif()
 
 include( ${CMAKE_CURRENT_LIST_DIR}/TorchLib/TorchLib.cmake )
 
+add_library( TorchTestLib STATIC libtest.cpp libtest.hpp )
+target_link_libraries( TorchTestLib PRIVATE TorchLib )
+
+set_source_files_properties( libtest.cpp PROPERTIES COMPILE_OPTIONS "-fexceptions" )
+
 add_executable( TorchTest TorchTest.cpp )
-target_link_libraries( TorchTest PRIVATE TorchLib )
+target_link_libraries( TorchTest PRIVATE TorchTestLib )
+
 
 set( TEST_FILES
     data_in.bin
